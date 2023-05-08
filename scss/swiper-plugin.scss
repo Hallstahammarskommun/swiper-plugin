@@ -15,6 +15,7 @@ button.icon-smaller.no-round-icon .icon > * {
   position: absolute;
   left: 100px;
   top: 80px;
+  min-width: 150px;
   max-width: 300px;
   z-index: 1;
   cursor: move;
@@ -51,7 +52,7 @@ button.icon-smaller.no-round-icon .icon > * {
   cursor: default;
   border-radius: 5px;
 
-  max-height: 200px;
+  max-height: 380px;
   overflow-y: auto;
 }
 
