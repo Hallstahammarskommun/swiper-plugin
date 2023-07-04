@@ -1,4 +1,3 @@
-import permalink from './utils/permalink/permalink';
 import stripJSONComments from './utils/stripjsoncomments';
 
 const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
@@ -8,10 +7,14 @@ const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
   function createSwiperLayers() {
     let url = window.location.href.split("intern")[0] + '\\' + _origoPath;
     if (window.location.hash) {
-      const urlParams = permalink.parsePermalink(window.location.href);
+      const urlParams = viewer.permalink.parsePermalink(window.location.href);
       if (urlParams.map) {
         url = `${urlParams.map}.json`;
       }
+    } 
+    const searchurlParams = new URLSearchParams(window.location.search);
+    if (searchurlParams.has('mapStateId')) {
+      url = (location.origin).concat(location.pathname).concat(_origoPath);
     } 
 
     return fetch(url, {
@@ -25,8 +28,7 @@ const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
       let data;
       try {
         data = JSON.parse(stripped);
-        console.log(data);
-      } catch (e) {
+       } catch (e) {
         const index = parseInt(e.message.split(' ').pop(), 10);
         if (index) {
           const row = stripped.substring(0, index).match(/^/gm).length;
@@ -36,9 +38,7 @@ const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
         }
       }
 
-      console.log(data.layers);
       const swiperLayers = data.layers.filter(elem => elem.isSwiperLayer);
-      console.log(swiperLayers);
       // creating the cloned version of the swiper layers
       swiperLayers.forEach(layer => {
         layer.name += '__swiper';
@@ -54,8 +54,7 @@ const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
       });
 
       _viewer.addLayers(swiperLayers)
-      console.log('swiperLayers added');
-
+ 
       return swiperLayers;
     });
   }
