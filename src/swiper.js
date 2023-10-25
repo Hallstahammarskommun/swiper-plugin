@@ -509,7 +509,7 @@ const Swiper = function Swiper({  circleRadius = 50,
 
       // setting the default layer
       if (layerName.replace('__swiper', '').toLowerCase() === defaultLayer.toLowerCase()) {
-        console.log('default layer set:', defaultLayer);
+        // console.log('default layer set:', defaultLayer);
         _visibleLeftLayer = la;
       }
     });
@@ -551,7 +551,7 @@ const Swiper = function Swiper({  circleRadius = 50,
       return false;
     }
 
-    console.log('Swiper defined layers', layers.length, layers.map(l => l.get('name')))
+    // console.log('Swiper defined layers', layers.length, layers.map(l => l.get('name')))
 
     setSwiperLayers(layers);
     return true;
