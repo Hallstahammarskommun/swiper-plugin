@@ -607,10 +607,9 @@ const Swiper = function Swiper({  circleRadius = 50,
           if (isSwiperToolsOpen) {
             closeSwiperTool();
           } else {
-            let interactionLogURL = 'https://karta.hallstahammar.se/fmejobsubmitter/Script/tracker%20interaction.fmw?';
-            interactionLogURL += `username=${localStorage.getItem('username')}`;
+            let interactionLogURL = 'https://karta.hallstahammar.se/fmejobsubmitter/Karttjanst/tracker%20interaction.fmw?';
             interactionLogURL += '&obj=Swiper';
-            interactionLogURL += '&DestDataset_POSTGRES=PostgreSQL%20geodata&opt_showresult=false&opt_servicemode=sync&token=46b87662b6a67111c1386a1d37e03d01e394a3b1';
+            interactionLogURL += '&opt_showresult=false&opt_servicemode=sync';
 
             fetch(interactionLogURL, {
               method: 'POST',
