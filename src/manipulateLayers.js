@@ -7,7 +7,6 @@ const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
     let url;
     if (origoPath !== 'intern.json') {
       url = origoPath;
-      url += '&swiper=ja';
     } else {
       url = window.location.href.split("intern")[0] + '\\' + _origoPath;
     if (window.location.hash) {
