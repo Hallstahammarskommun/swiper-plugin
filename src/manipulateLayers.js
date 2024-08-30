@@ -9,24 +9,18 @@ const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
       url = origoPath;
     } else {
       url = window.location.href.split("intern")[0] + '\\' + _origoPath;
-    if (window.location.hash) {
-      const urlParams = viewer.permalink.parsePermalink(window.location.href);
-      if (urlParams.map) {
-        url = `${urlParams.map}.json`;
+      if (window.location.hash) {
+        const urlParams = viewer.permalink.parsePermalink(window.location.href);
+        if (urlParams.map) {
+          url = `${urlParams.map}.json`;
+        }
+      } 
+      const searchurlParams = new URLSearchParams(window.location.search);
+      if (searchurlParams.has('mapStateId')) {
+        url = (location.origin).concat(location.pathname).concat(_origoPath);
       }
-    } 
-    const searchurlParams = new URLSearchParams(window.location.search);
-    if (searchurlParams.has('mapStateId')) {
-      url = (location.origin).concat(location.pathname).concat(_origoPath);
     }
-    }
-    return fetch(url, {
-      dataType: 'json' 
-    })
-    // res.json() does not allow comments in json. 
-    // Read out body as string and parse "manually"
-    .then(res => res.text())
-    .then((bodyAsJson) => {
+    function bodyAsJason(bodyAsJson) {
       const stripped = stripJSONComments(bodyAsJson);
       let data;
       try {
@@ -57,9 +51,28 @@ const ManipulateLayers = function ManipulateLayers(viewer, origoPath) {
       });
 
       _viewer.addLayers(swiperLayers)
- 
       return swiperLayers;
-    });
+    };
+    
+    if (typeof url === 'object') {
+      const promise = new Promise((resolve, reject) => {
+        resolve(url);
+      })
+      return promise.then(res => JSON.stringify(res))
+      .then((bodyJson) => {
+        bodyAsJason(bodyJson);
+      })
+    } else {
+      return fetch(url, {
+        dataType: 'json' 
+      })
+      // res.json() does not allow comments in json. 
+      // Read out body as string and parse "manually"
+      .then(res => res.text())
+      .then((bodyJson) => {
+        bodyAsJason(bodyJson);
+      });
+    }
   }
 
   return createSwiperLayers();
